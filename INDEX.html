@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Tempo de Café</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .controls { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .controls label { font-weight: bold; }
+    .controls input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 80px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 12px; text-align: center; }
+    th { background-color: #eaeaea; }
+    tr.finalizado { background-color: #c8e6c9; }
+    .message { margin-top: 15px; padding: 10px; background-color: #ffe0b2; border: 1px solid #ffcc80; border-radius: 4px; text-align: center; color: #e65100; font-weight: bold; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Controle de Tempo de café ☕</h2>
+
+  <div class="controls">
+    <label for="limiteMarcacoes">Limite de Marcações Simultâneas:</label>
+    <input type="number" id="limiteMarcacoes" value="2" min="1">
+    <span id="marcacoesAtivas">Marcações Ativas: 0</span>
+  </div>
+
+  <div id="mensagemLimite" class="message">
+    Limite de Técnicos em café atingido! Aguarde alguém retornar para permitir novas marcações.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Marcar</th>
+        <th>Funcionário(a)</th>
+        <th>Hora da Marcação</th>
+        <th>Tempo Restante</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="linha-0">
+        <td><input type="checkbox" id="check-0" onchange="marcar(0)"></td>
+        <td>Ana J.</td>
+        <td id="hora-0"></td>
+        <td id="tempo-0"></td>
+      </tr>
+      <tr id="linha-1">
+        <td><input type="checkbox" id="check-1" onchange="marcar(1)"></td>
+        <td>Antônio</td>
+        <td id="hora-1"></td>
+        <td id="tempo-1"></td>
+      </tr>
+      <tr id="linha-2">
+        <td><input type="checkbox" id="check-2" onchange="marcar(2)"></td>
+        <td>Brenno</td>
+        <td id="hora-2"></td>
+        <td id="tempo-2"></td>
+      </tr>
+      <tr id="linha-3">
+        <td><input type="checkbox" id="check-3" onchange="marcar(3)"></td>
+        <td>Fernando</td>
+        <td id="hora-3"></td>
+        <td id="tempo-3"></td>
+      </tr>
+      <tr id="linha-4">
+        <td><input type="checkbox" id="check-4" onchange="marcar(4)"></td>
+        <td>Fernando D</td>
+        <td id="hora-4"></td>
+        <td id="tempo-4"></td>
+      </tr>
+      <tr id="linha-5">
+        <td><input type="checkbox" id="check-5" onchange="marcar(5)"></td>
+        <td>Guilherme</td>
+        <td id="hora-5"></td>
+        <td id="tempo-5"></td>
+      </tr>
+      <tr id="linha-6">
+        <td><input type="checkbox" id="check-6" onchange="marcar(6)"></td>
+        <td>Lucas</td>
+        <td id="hora-6"></td>
+        <td id="tempo-6"></td>
+      </tr>
+      <tr id="linha-7">
+        <td><input type="checkbox" id="check-7" onchange="marcar(7)"></td>
+        <td>Marcus</td>
+        <td id="hora-7"></td>
+        <td id="tempo-7"></td>
+      </tr>
+      <tr id="linha-8">
+        <td><input type="checkbox" id="check-8" onchange="marcar(8)"></td>
+        <td>Mariana</td>
+        <td id="hora-8"></td>
+        <td id="tempo-8"></td>
+      </tr>
+      <tr id="linha-9">
+        <td><input type="checkbox" id="check-9" onchange="marcar(9)"></td>
+        <td>Matheus</td>
+        <td id="hora-9"></td>
+        <td id="tempo-9"></td>
+      </tr>
+      <tr id="linha-10">
+        <td><input type="checkbox" id="check-10" onchange="marcar(10)"></td>
+        <td>Nathan</td>
+        <td id="hora-10"></td>
+        <td id="tempo-10"></td>
+      </tr>
+      <tr id="linha-11">
+        <td><input type="checkbox" id="check-11" onchange="marcar(11)"></td>
+        <td>Pablo</td>
+        <td id="hora-11"></td>
+        <td id="tempo-11"></td>
+      </tr>
+      <tr id="linha-12">
+        <td><input type="checkbox" id="check-12" onchange="marcar(12)"></td>
+        <td>Paula</td>
+        <td id="hora-12"></td>
+        <td id="tempo-12"></td>
+      </tr>
+      <tr id="linha-13">
+        <td><input type="checkbox" id="check-13" onchange="marcar(13)"></td>
+        <td>Rafaela</td>
+        <td id="hora-13"></td>
+        <td id="tempo-13"></td>
+      </tr>
+      <tr id="linha-14">
+        <td><input type="checkbox" id="check-14" onchange="marcar(14)"></td>
+        <td>Renata</td>
+        <td id="hora-14"></td>
+        <td id="tempo-14"></td>
+      </tr>
+      <tr id="linha-15">
+        <td><input type="checkbox" id="check-15" onchange="marcar(15)"></td>
+        <td>Renato</td>
+        <td id="hora-15"></td>
+        <td id="tempo-15"></td>
+      </tr>
+      <tr id="linha-16">
+        <td><input type="checkbox" id="check-16" onchange="marcar(16)"></td>
+        <td>Ronan</td>
+        <td id="hora-16"></td>
+        <td id="tempo-16"></td>
+      </tr>
+      <tr id="linha-17">
+        <td><input type="checkbox" id="check-17" onchange="marcar(17)"></td>
+        <td>Saymon</td>
+        <td id="hora-17"></td>
+        <td id="tempo-17"></td>
+      </tr>
+      <tr id="linha-18">
+        <td><input type="checkbox" id="check-18" onchange="marcar(18)"></td>
+        <td>Stefano</td>
+        <td id="hora-18"></td>
+        <td id="tempo-18"></td>
+      </tr>
+      <tr id="linha-19">
+        <td><input type="checkbox" id="check-19" onchange="marcar(19)"></td>
+        <td>Vinicius</td>
+        <td id="hora-19"></td>
+        <td id="tempo-19"></td>
+      </tr>
+      <tr id="linha-20">
+        <td><input type="checkbox" id="check-20" onchange="marcar(20)"></td>
+        <td>ViniciusA</td>
+        <td id="hora-20"></td>
+        <td id="tempo-20"></td>
+      </tr>
+      <tr id="linha-21">
+        <td><input type="checkbox" id="check-21" onchange="marcar(21)"></td>
+        <td>Victor</td>
+        <td id="hora-21"></td>
+        <td id="tempo-21"></td>
+      </tr>
+      <tr id="linha-22">
+        <td><input type="checkbox" id="check-22" onchange="marcar(22)"></td>
+        <td>Whelbert</td>
+        <td id="hora-22"></td>
+        <td id="tempo-22"></td>
+      </tr>
+      <tr id="linha-23">
+        <td><input type="checkbox" id="check-23" onchange="marcar(23)"></td>
+        <td>Yasmin</td>
+        <td id="hora-23"></td>
+        <td id="tempo-23"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // O array `estado` com todos os funcionários
+  const estado = [
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null },
+    { checked: false, hora: null }, { checked: false, hora: null }
+  ];
+
+  const limiteInput = document.getElementById('limiteMarcacoes');
+  const marcacoesAtivasSpan = document.getElementById('marcacoesAtivas');
+  const mensagemLimiteDiv = document.getElementById('mensagemLimite');
+
+  function atualizarContadorMarcacoes() {
+    const marcacoesAtivas = estado.filter(reg => reg.checked).length;
+    marcacoesAtivasSpan.textContent = `Marcações Ativas: ${marcacoesAtivas}`;
+    const limite = parseInt(limiteInput.value);
+
+    if (marcacoesAtivas >= limite) {
+      mensagemLimiteDiv.style.display = 'block';
+    } else {
+      mensagemLimiteDiv.style.display = 'none';
+    }
+  }
+
+  function marcar(i) {
+    const agora = new Date();
+    const horaTd = document.getElementById(`hora-${i}`);
+    const tempoTd = document.getElementById(`tempo-${i}`);
+    const linha = document.getElementById(`linha-${i}`);
+    const checkbox = document.getElementById(`check-${i}`);
+    const limite = parseInt(limiteInput.value);
+    const marcacoesAtivas = estado.filter(reg => reg.checked).length;
+
+    // Se a caixa for marcada e o limite for atingido, impede a marcação
+    if (checkbox.checked && marcacoesAtivas >= limite) {
+      checkbox.checked = false; // Desmarca a caixa
+      mensagemLimiteDiv.style.display = 'block'; // Mostra a mensagem
+      return; // Sai da função
+    }
+
+    if (checkbox.checked) {
+      estado[i].hora = agora;
+      estado[i].checked = true; // Atualiza o estado
+      horaTd.textContent = agora.toLocaleTimeString();
+      linha.classList.remove("finalizado");
+    } else {
+      estado[i].hora = null;
+      estado[i].checked = false; // Atualiza o estado
+      horaTd.textContent = "";
+      tempoTd.textContent = "";
+      linha.classList.remove("finalizado");
+    }
+    atualizarContadorMarcacoes(); // Atualiza o contador após a marcação/desmarcação
+  }
+
+  function atualizar() {
+    const agora = new Date();
+    estado.forEach((reg, i) => {
+      const tempoTd = document.getElementById(`tempo-${i}`);
+      const linha = document.getElementById(`linha-${i}`);
+      if (reg.hora) {
+        const diff = (agora - reg.hora) / 1000;
+        const restante = 900 - diff; // 15 minutos = 900 segundos
+        if (restante > 0) {
+          const m = Math.floor(restante / 60).toString().padStart(2, '0');
+          const s = Math.floor(restante % 60).toString().padStart(2, '0');
+          tempoTd.textContent = `${m}:${s}`;
+          linha.classList.remove("finalizado"); // Garante que a linha não esteja finalizada se o tempo ainda não acabou
+        } else {
+          tempoTd.textContent = "00:00";
+          linha.classList.add("finalizado");
+          // Opcional: Desmarcar automaticamente o checkbox quando o tempo acabar
+          // const checkbox = document.getElementById(`check-${i}`);
+          // if (checkbox.checked) {
+          //   checkbox.checked = false;
+          //   estado[i].checked = false;
+          //   estado[i].hora = null;
+          //   atualizarContadorMarcacoes();
+          // }
+        }
+      }
+    });
+    atualizarContadorMarcacoes(); // Atualiza o contador a cada segundo
+  }
+
+  // Inicializa o contador e a mensagem
+  atualizarContadorMarcacoes();
+  setInterval(atualizar, 1000);
+</script>
+
+</body>
+</html>
